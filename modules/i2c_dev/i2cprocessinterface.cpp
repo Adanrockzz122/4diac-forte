@@ -40,9 +40,15 @@ bool CI2CProcessInterface::initialise(bool paIsInput, CEventChainExecutionThread
 
   if (3 == paramsList.size()) {
     CIEC_INT param;
-    param.fromString(paramsList[1].c_str()); // TODO check return value
+    if (0 >= param.fromString(paramsList[1].c_str())) {
+      STATUS() = scmInvalidParam;
+      return false;
+    }
     int deviceAddress = param;
-    param.fromString(paramsList[2].c_str()); // TODO check return value
+    if (0 >= param.fromString(paramsList[2].c_str())) {
+      STATUS() = scmInvalidParam;
+      return false;
+    }
     mValueAddress = param;
 
     std::string devPath("/dev/i2c-");
